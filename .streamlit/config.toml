@@ -1,0 +1,7 @@
+[theme]
+base="light"
+font="monospace"
+textColor="#262730"
+
+[runner]
+fastReruns = true
