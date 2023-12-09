@@ -274,8 +274,7 @@ def define_text_input_from_history_selectbox():
     st.session_state["history_input"] = None  # reset
 
 
-st.set_page_config(layout="wide")
-st.set_page_config(initial_sidebar_state="expanded")
+st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
 
 # Initialize session state's variables
