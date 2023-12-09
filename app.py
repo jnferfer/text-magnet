@@ -4,7 +4,7 @@ from ast import literal_eval
 from styles import *
 from st_click_detector import click_detector
 from streamlit_agraph import agraph, Node, Edge, Config
-
+from about import *
 
 def filter_links(dist_threshold, links_dict):
     """
@@ -324,7 +324,7 @@ with st.sidebar:
 explorer, about = st.tabs(["Explorer", "What is it?"])
 
 with explorer:
-    left, right = st.columns([0.5, 0.5], gap="medium")
+    left, right = st.columns([0.5, 0.5], gap="large")
     with left:
         text = st.empty()
         goal = st.empty()
@@ -333,7 +333,25 @@ with explorer:
         graph = st.empty()
 
 with about:
-    pass
+    _left, _center, _right = st.columns([0.2, 0.6, 0.2])
+    with _center:
+        st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
+        # st.image("iman (1).png")
+        st.markdown(text1)
+        st.markdown(text2)
+        st.image("1.png")
+        st.markdown(text3)
+        st.image("2.png")
+        st.markdown(text4)
+        st.image("3.png")
+        st.markdown(text5)
+        st.markdown(text6)
+        st.image("4.png")
+        st.markdown(text7)
+        st.image("5.png")
+        st.markdown(text8)
+
+
 
 
 # Build history selectbox
