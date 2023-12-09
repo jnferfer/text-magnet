@@ -6,6 +6,7 @@ from st_click_detector import click_detector
 from streamlit_agraph import agraph, Node, Edge, Config
 from about import *
 
+
 def filter_links(dist_threshold, links_dict):
     """
     In data, each sentence may come with related links, but not all are useful.
@@ -274,6 +275,7 @@ def define_text_input_from_history_selectbox():
 
 
 st.set_page_config(layout="wide")
+st.set_page_config(initial_sidebar_state="expanded")
 
 
 # Initialize session state's variables
