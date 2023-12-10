@@ -4,50 +4,22 @@ from ast import literal_eval
 from styles import *
 from st_click_detector import click_detector
 from streamlit_agraph import agraph, Node, Edge, Config
+from streamlit_gsheets import GSheetsConnection
 from about import *
 
 
-def filter_links(dist_threshold, links_dict):
+@st.cache_data(show_spinner=False, ttl="3m")
+def load_data_and_titles():
     """
-    In data, each sentence may come with related links, but not all are useful.
-    This function discards links whose relations' names are incorrect and
-    similarity dist. (between sent. and linked sent.) is above the threshold.
+    Read data from GSheets.
 
-    :param dist_threshold: Max. similarity dist. allowed between sent. and linked sent.
-    :param links_dict: Dictionary with links
-    :return:
-    """
-
-    allowed_rels = ["FOR_EXAMPLE", "THE_OPPOSITE_IS", "CONSEQUENCE_IS", "INTERVENTION_IS", "ADDITIONALLY", "CAUSE_IS",
-                    "EQUIVALENT", "SIMILARLY"]
-    filtered = {}
-    for rel, links in links_dict.items():
-        if rel in allowed_rels:
-            remaining_links = [link for link in links if link["dist"] <= dist_threshold]
-            if remaining_links:
-                filtered[rel] = remaining_links
-
-    return filtered
-
-
-@st.cache_data(show_spinner=False)
-def load_data_and_titles(dist_threshold=0.99, df_path="data/demo_df.csv"):
-    """
-    Read 'data/demo_df.csv' and return a dataframe with selected data
-    a list with all titles.
-
-    :param dist_threshold: Max. similarity dist. allowed between sent. and linked sent. from data.
-    :param df_path: Source data path
     :return: Tuple with dataframe and a list of titles
     """
 
-    data = pd.read_csv(df_path)
-    data = data[["doc_id", "title", "sent_id", "sent", "links"]]
+    conn = st.connection("gsheets", type=GSheetsConnection)
+    data = conn.read(ttl="3m")
     data.fillna("", inplace=True)
-
     data["links"] = data["links"].apply(lambda x: literal_eval(x))
-    data["links"] = data["links"].apply(lambda links: filter_links(dist_threshold, links))
-
     titles = sorted(set(data["title"]))
 
     return data, titles
@@ -274,127 +246,120 @@ def define_text_input_from_history_selectbox():
     st.session_state["history_input"] = None  # reset
 
 
-st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+if __name__ == "__main__":
 
+    st.set_page_config(layout="wide", initial_sidebar_state="expanded")
 
-# Initialize session state's variables
+    # Initialize session state's variables
 
-for variable in ["text_input", "clicked_sent_id", "end_of_script"]:
-    if variable not in st.session_state:
-        st.session_state[variable] = None
+    for variable in ["text_input", "clicked_sent_id", "end_of_script"]:
+        if variable not in st.session_state:
+            st.session_state[variable] = None
 
-if "history" not in st.session_state:
-    st.session_state["history"] = []
+    if "history" not in st.session_state:
+        st.session_state["history"] = []
 
-if st.session_state["end_of_script"] == "end":
-    st.session_state["clicked_sent_id"] = None  # reset
-    st.session_state["end_of_script"] = None  # reset
+    if st.session_state["end_of_script"] == "end":
+        st.session_state["clicked_sent_id"] = None  # reset
+        st.session_state["end_of_script"] = None  # reset
 
+    # Load demo data
 
-# Load demo data
+    with st.spinner(text="Reading demo data"):
+        data, titles = load_data_and_titles()
 
-with st.spinner(text="Reading demo data"):
-    data, titles = load_data_and_titles()
+    # Build sidebar
 
-
-# Build sidebar
-
-with st.sidebar:
-    st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
-    st.image("logo.png")
-    st.markdown(
-        SIDEBAR_TEXT.format(
-            "TextMagnet 1.0",
-            "Discover hidden connections among different texts. \
-            Demo with <a href='https://paperswithcode.com/dataset/medquad' target='_blank'>MedQuAD</a>"),
-        unsafe_allow_html=True
-    )
-    st.selectbox(
-        label="title",
-        options=titles,
-        index=None,
-        on_change=define_text_input_from_title_selectbox,
-        key="titles_input",
-        placeholder="Titles",
-        label_visibility="collapsed"
-    )
-
-
-# Build Explorer and About layout
-
-explorer, about = st.tabs(["Explorer", "What is it?"])
-
-with explorer:
-    left, right = st.columns([0.5, 0.5], gap="large")
-    with left:
-        text = st.empty()
-        goal = st.empty()
-    with right:
-        history = st.empty()
-        graph = st.empty()
-
-with about:
-    _left, _center, _right = st.columns([0.2, 0.6, 0.2])
-    with _center:
+    with st.sidebar:
         st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
-        st.image("campo-magnetico.png")
-        st.markdown(text1)
-        st.markdown(text2)
-        st.image("1.png")
-        st.markdown(text3)
-
-
-
-
-
-# Build history selectbox
-
-with history:
-    st.selectbox(
-        label="history",
-        options=st.session_state["history"][::-1],
-        index=None,
-        on_change=define_text_input_from_history_selectbox,
-        key="history_input",
-        placeholder="↺ History",
-        disabled=True if len(st.session_state["history"]) < 2 else False,
-        label_visibility="collapsed"
-    )
-
-
-# Build text
-
-if st.session_state["text_input"]:
-    with text:
-        text_output = click_detector(
-            html_content=build_text(data=data, doc_id=st.session_state["text_input"],
-                                    clicked_sent_id=st.session_state["clicked_sent_id"]),
-            key="clicked_sent_id"
+        st.image("imgs/logo.png")
+        st.markdown(
+            SIDEBAR_TEXT.format(
+                "TextMagnet 1.0",
+                "Discover hidden connections among different texts. \
+                Demo with <a href='https://paperswithcode.com/dataset/medquad' target='_blank'>MedQuAD</a>"),
+            unsafe_allow_html=True
+        )
+        st.selectbox(
+            label="title",
+            options=titles,
+            index=None,
+            on_change=define_text_input_from_title_selectbox,
+            key="titles_input",
+            placeholder="Titles",
+            label_visibility="collapsed"
         )
 
-    # Build graph
+    # Build Explorer and About layout
 
-    if text_output:
-        with graph:
-            g = Graph(data=data)
-            graph_output = g.build(doc_id_sent_id=text_output)
+    explorer, about = st.tabs(["Explorer", "What is it?"])
 
-        # Build goal text
+    with explorer:
+        left, right = st.columns([0.5, 0.5], gap="large")
+        with left:
+            text = st.empty()
+            goal = st.empty()
+        with right:
+            history = st.empty()
+            graph = st.empty()
 
-        if graph_output and "|" in graph_output:
-            with goal:
-                link_doc_id, link_sent_id, color, node_label = graph_output.split("|")
-                goal_output = click_detector(
-                    html_content=build_goal_text(data=data, doc_id=link_doc_id,
-                                                 link_sent_id=int(link_sent_id), color=color, node_label=node_label),
-                    key="clicked_goal"
-                )
+    with about:
+        _left, _center, _right = st.columns([0.2, 0.6, 0.2])
+        with _center:
+            st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
+            st.image("imgs/campo-magnetico.png")
+            st.markdown(text1)
+            st.markdown(text2)
+            st.image("imgs/1.png")
+            st.markdown(text3)
 
-                # Build text from goal
+    # Build history selectbox
 
-                if goal_output:
-                    st.session_state["text_input"] = goal_output
-                    add_to_history(title=data[data["doc_id"] == goal_output]["title"].iloc[0])
-                    del st.session_state["clicked_goal"]
-                    st.session_state["end_of_script"] = "end"
-                    st.rerun()
+    with history:
+        st.selectbox(
+            label="history",
+            options=st.session_state["history"][::-1],
+            index=None,
+            on_change=define_text_input_from_history_selectbox,
+            key="history_input",
+            placeholder="↺ History",
+            disabled=True if len(st.session_state["history"]) < 2 else False,
+            label_visibility="collapsed"
+        )
+
+    # Build text
+
+    if st.session_state["text_input"]:
+        with text:
+            text_output = click_detector(
+                html_content=build_text(data=data, doc_id=st.session_state["text_input"],
+                                        clicked_sent_id=st.session_state["clicked_sent_id"]),
+                key="clicked_sent_id"
+            )
+
+        # Build graph
+
+        if text_output:
+            with graph:
+                g = Graph(data=data)
+                graph_output = g.build(doc_id_sent_id=text_output)
+
+            # Build goal text
+
+            if graph_output and "|" in graph_output:
+                with goal:
+                    link_doc_id, link_sent_id, color, node_label = graph_output.split("|")
+                    goal_output = click_detector(
+                        html_content=build_goal_text(data=data, doc_id=link_doc_id,
+                                                     link_sent_id=int(link_sent_id), color=color, node_label=node_label),
+                        key="clicked_goal"
+                    )
+
+                    # Build text from goal
+
+                    if goal_output:
+                        st.session_state["text_input"] = goal_output
+                        add_to_history(title=data[data["doc_id"] == goal_output]["title"].iloc[0])
+                        del st.session_state["clicked_goal"]
+                        st.session_state["end_of_script"] = "end"
+                        st.rerun()
