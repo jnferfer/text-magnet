@@ -276,10 +276,11 @@ if __name__ == "__main__":
         st.markdown(
             SIDEBAR_TEXT.format(
                 "TextMagnet 1.0",
-                "Discover hidden connections among different texts. \
-                Demo with <a href='https://paperswithcode.com/dataset/medquad' target='_blank'>MedQuAD</a>"),
+                "Demo with <a href='https://paperswithcode.com/dataset/medquad' target='_blank'>MedQuAD</a>",
+                "Select a title from the list and click on the underlined sentences to discover related ideas in other different texts"),
             unsafe_allow_html=True
         )
+
         st.selectbox(
             label="title",
             options=titles,

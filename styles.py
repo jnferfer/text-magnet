@@ -11,7 +11,7 @@ SIDEBAR_LOGO = """
     </style>
 """
 
-SIDEBAR_TEXT = "<center><h2>{}</h2><p style='line-height: 1.3;'>{}.</p></center>"
+SIDEBAR_TEXT = "<center><h2>{}</h2><p style='line-height: 1.3;'>{}<br><br><em>{}</em></p><br></center>"
 
 TEXT = "line-height: 2.5; padding-right: 15px; overflow-y: scroll; max-height:450px;"
 
