@@ -5,3 +5,6 @@ textColor="#262730"
 
 [runner]
 fastReruns = true
+
+[server]
+fileWatcherType = "poll"
