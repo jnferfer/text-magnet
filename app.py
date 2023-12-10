@@ -337,20 +337,12 @@ with about:
     _left, _center, _right = st.columns([0.2, 0.6, 0.2])
     with _center:
         st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
-        # st.image("iman (1).png")
+        st.image("campo-magnetico.png")
         st.markdown(text1)
         st.markdown(text2)
         st.image("1.png")
         st.markdown(text3)
-        st.image("2.png")
-        st.markdown(text4)
-        st.image("3.png")
-        st.markdown(text5)
-        st.markdown(text6)
-        st.image("4.png")
-        st.markdown(text7)
-        st.image("5.png")
-        st.markdown(text8)
+
 
 
 
