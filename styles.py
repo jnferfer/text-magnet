@@ -11,7 +11,7 @@ SIDEBAR_LOGO = """
     </style>
 """
 
-SIDEBAR_TEXT = "<center><h2>{}</h2><p style='line-height: 1.3;'>{}<br><br><em>{}</em></p><br></center>"
+SIDEBAR_TEXT = "<center><h2>{}</h2><p style='line-height: 1.3;'>{}</p></center>"
 
 TEXT = "line-height: 2.5; padding-right: 15px; overflow-y: scroll; max-height:450px;"
 
@@ -58,5 +58,29 @@ NODE = {
 
 GOAL_TEXT = "padding-left:20px; line-height: 1.6;"
 
-GOAL_DOT = "color: {}; line-height:0.5; font-size:30px;"
+#GOAL_DOT = "color: {}; line-height:0.5; font-size:30px;"
+
+
+def generate_goal_head(color, node_label):
+    return f"""
+<style>
+    @keyframes blink {{
+        0% {{color: transparent;}}
+        50% {{color: {color};}}
+        100% {{color: transparent;}}
+    }}
+    #blinking {{
+        animation: blink 3s linear infinite;
+        font-size: 33px;
+        padding-left: 20px;
+        vertical-align: middle;
+        line-height: 0.5;
+    }}
+    #text {{
+        font-size: 18px;
+        vertical-align: middle;
+    }}
+</style>
+<p><span id="blinking">●</span><span id="text"> {node_label}</span></p>
+"""
 

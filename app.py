@@ -1,5 +1,3 @@
-import streamlit as st
-import pandas as pd
 from ast import literal_eval
 from styles import *
 from st_click_detector import click_detector
@@ -90,7 +88,8 @@ def build_goal_text(data, doc_id, link_sent_id, color, node_label):
 
     title = filtered["title"].iloc[0]
 
-    goal_text = f"<p style='{GOAL_TEXT}'><span style='{GOAL_DOT.format(color)}'>●</span> <b>{node_label}</b><br> «"
+    goal_head = generate_goal_head(color, node_label)
+    goal_text = goal_head + f"<p style='{GOAL_TEXT}'> «"
 
     for sent_id, sent in zip(filtered["sent_id"], filtered["sent"]):
         sent = sent.lstrip("<br>")
@@ -248,7 +247,7 @@ def define_text_input_from_history_selectbox():
 
 if __name__ == "__main__":
 
-    st.set_page_config(layout="wide", initial_sidebar_state="expanded")
+    st.set_page_config(layout="wide", initial_sidebar_state="expanded", page_icon="imgs/logo.png")
 
     # Initialize session state's variables
 
@@ -265,7 +264,7 @@ if __name__ == "__main__":
 
     # Load demo data
 
-    with st.spinner(text="Reading demo data"):
+    with st.spinner(text=""):
         data, titles = load_data_and_titles()
 
     # Build sidebar
@@ -291,9 +290,21 @@ if __name__ == "__main__":
             label_visibility="collapsed"
         )
 
+        st.markdown("""
+        &nbsp;  
+        &nbsp;  
+        Instructions:
+        
+        :one: Select a title from the list
+        
+        :two: Click on the underlined sentences to discover related ideas in different texts
+        
+        :three: Click on the graph's nodes to reach the text snippet that contains the related idea
+        """)
+
     # Build Explorer and About layout
 
-    explorer, about = st.tabs(["Explorer", "What is it?"])
+    explorer, about = st.tabs(["Explorer", "About"])
 
     with explorer:
         left, right = st.columns([0.5, 0.5], gap="large")
@@ -305,14 +316,9 @@ if __name__ == "__main__":
             graph = st.empty()
 
     with about:
-        _left, _center, _right = st.columns([0.2, 0.6, 0.2])
+        _left, _center, _right = st.columns([0.225, 0.55, 0.225])
         with _center:
-            st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
-            st.image("imgs/campo-magnetico.png")
-            st.markdown(text1)
-            st.markdown(text2)
-            st.image("imgs/1.png")
-            st.markdown(text3)
+            build_about()
 
     # Build history selectbox
 
