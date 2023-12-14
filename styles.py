@@ -17,7 +17,7 @@ TEXT = "line-height: 2.5; padding-right: 15px; overflow-y: scroll; max-height:45
 
 HIGHLIGHTED_SENT = "background-color: #cde8f7"
 
-TEXT_HYPERLINK = "text-decoration: underline dotted; color: #262730;"
+TEXT_HYPERLINK = "text-decoration: underline dotted; text-decoration-thickness: 1.5px; color: #262730;"
 
 NODE = {
     "size": 11,
@@ -57,8 +57,6 @@ NODE = {
 }
 
 GOAL_TEXT = "padding-left:20px; line-height: 1.6;"
-
-#GOAL_DOT = "color: {}; line-height:0.5; font-size:30px;"
 
 
 def generate_goal_head(color, node_label):

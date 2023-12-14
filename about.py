@@ -24,7 +24,7 @@ architecture_subheading = "The architecture"
 architecture_1 = """
 TextMagnet is an NLP engine that reasons about the **similarity of two sentences** (their semantic proximity). Specifically, it identifies whether there is a coherence relationship between two close-in-meaning sentences.
 
-Let's say we want to find text similar to the following snippet, which is our *query*:
+Let's say we want to find text similar to the following snippet, which is our query:
 
 > *Panic disorder is a type of anxiety disorder*
 
