@@ -275,7 +275,7 @@ if __name__ == "__main__":
         st.markdown(
             SIDEBAR_TEXT.format(
                 "TextMagnet 1.0",
-                "Demo with <a href='https://paperswithcode.com/dataset/medquad' target='_blank'>MedQuAD</a>",
+                "Discover hidden connections",
                 "Select a title from the list and click on the underlined sentences to discover related ideas in other different texts"),
             unsafe_allow_html=True
         )
@@ -293,6 +293,7 @@ if __name__ == "__main__":
         st.markdown("""
         &nbsp;  
         &nbsp;  
+        &nbsp;  
         Instructions:
         
         :one: Select a title from the list
@@ -300,6 +301,8 @@ if __name__ == "__main__":
         :two: Click on the underlined sentences to discover related ideas in different texts
         
         :three: Click on the graph's nodes to reach the text snippet that contains the related idea
+        
+        Demo version with [MedQuAD](https://paperswithcode.com/dataset/medquad)
         """)
 
     # Build Explorer and About layout

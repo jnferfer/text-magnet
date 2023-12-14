@@ -11,7 +11,7 @@ SIDEBAR_LOGO = """
     </style>
 """
 
-SIDEBAR_TEXT = "<center><h2>{}</h2><p style='line-height: 1.3;'>{}</p></center>"
+SIDEBAR_TEXT = "<center><h2>{}</h2><p style='line-height: 1.3;'><b>{}</b></p></center>"
 
 TEXT = "line-height: 2.5; padding-right: 15px; overflow-y: scroll; max-height:450px;"
 
@@ -77,7 +77,8 @@ def generate_goal_head(color, node_label):
         line-height: 0.5;
     }}
     #text {{
-        font-size: 18px;
+        font-size: 16px;
+        font-family: 'Arial', sans-serif;
         vertical-align: middle;
     }}
 </style>

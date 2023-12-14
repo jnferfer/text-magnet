@@ -106,7 +106,7 @@ Therefore, TextMagnet consists of two fundamental modules to search for related 
 
 graphs_subheading = "About the graphs"
 graphs_1 = """
-Coherence relations describe the connection two sentences maintain. If this connection is logical, then it makes sense for the sentences to appear together. One complements the other; they seem to attract each other. For systems like ours, based on statistics and not on the experience emanating from common sense, it is not always easy to deduce this connection. In this sense, TextMagnet is an experiment on the capacity of such statistical models to relate ideas.
+Coherence relations describe the connection two sentences maintain. If this connection is logical, then it makes sense for the sentences to appear together. One complements the other; they seem to attract each other. For systems like ours, based on statistics and not on the common sense emanating from experience, it is not always easy to deduce this connection. In this sense, TextMagnet is an experiment on the capacity of such statistical models to relate ideas.
 
 The 1.0 version displays intuitive graphs showing the current performance of the engine. As you can see in the demo, the nodes of related ideas are organized around an initial set of relationships that currently are: *__Example__*, *__Cause__*, *__Consequence__*, *__Similarity__*, *__Explanation__* (i.e. added information), *__Opposite__*, *__Equivalence__*, *__Intervention__* (i.e. treatment). Improving the engine involves training it in different contexts (not just medical or health) and seeing how this set expands to more relationships. There is not an infinite set of relationships anyway, as linguistic theory ([Rhetorical Structure Theory](https://www.sfu.ca/rst/01intro/intro.html)) has already demonstrated.
 """
@@ -154,7 +154,7 @@ def build_about():
     st.markdown("<br>", unsafe_allow_html=True)
     st.subheader(graphs_subheading)
     st.markdown(graphs_1)
-    st.image("imgs/graph.svg", width=590)
+    st.image("imgs/graph.svg", width=520)
     st.markdown(graphs_2)
     st.markdown("<br>", unsafe_allow_html=True)
     st.subheader(future_work_subheading)
