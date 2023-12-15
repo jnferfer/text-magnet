@@ -6,7 +6,7 @@ from streamlit_gsheets import GSheetsConnection
 from about import *
 
 
-@st.cache_data(show_spinner=False, ttl="3m")
+@st.cache_data(show_spinner=False, ttl="7m")
 def load_data_and_titles():
     """
     Read data from GSheets.
@@ -15,7 +15,7 @@ def load_data_and_titles():
     """
 
     conn = st.connection("gsheets", type=GSheetsConnection)
-    data = conn.read(ttl="3m")
+    data = conn.read(ttl="7m")
     data.fillna("", inplace=True)
     data["links"] = data["links"].apply(lambda x: literal_eval(x))
     titles = sorted(set(data["title"]))
