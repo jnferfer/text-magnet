@@ -130,7 +130,7 @@ author_subheading = "About the author"
 author = """
 The code for the demo (not the engine's training models, which are currently kept private) can be found on [this GitHub profile](https://github.com/jnferfer/text-magnet).
 
-You can contact me for any suggestions regarding the development of this application on my [LinkedIn profile](www.linkedin.com/in/juanff) or by [e-mail](mailto:jnferfer@gmail.com).
+You can contact me for any suggestions regarding the development of this application on my [LinkedIn profile](https://www.linkedin.com/in/juanff/) or by [e-mail](mailto:jnferfer@gmail.com).
 
 Juan Fernández, 2023
 """
