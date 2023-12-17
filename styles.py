@@ -17,7 +17,7 @@ TEXT = "line-height: 2.5; padding-right: 15px; overflow-y: scroll; max-height:45
 
 HIGHLIGHTED_SENT = "background-color: #cde8f7"
 
-TEXT_HYPERLINK = "text-decoration: underline dotted; text-decoration-thickness: 1.5px; color: #262730;"
+TEXT_HYPERLINK = "text-decoration: underline; text-decoration-thickness: 0.2px; color: #262730;"
 
 NODE = {
     "size": 11,
