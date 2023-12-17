@@ -4,6 +4,7 @@ from st_click_detector import click_detector
 from streamlit_agraph import agraph, Node, Edge, Config
 from streamlit_gsheets import GSheetsConnection
 from about import *
+import time
 
 
 @st.cache_data(show_spinner=False, ttl="7m")
@@ -306,70 +307,72 @@ if __name__ == "__main__":
         """)
 
     # Build Explorer and About layout
+    with st.spinner(''):
+        time.sleep(0.3)
 
-    explorer, about = st.tabs(["Explorer", "About"])
+        explorer, about = st.tabs(["Explorer", "About"])
 
-    with explorer:
-        left, right = st.columns([0.5, 0.5], gap="large")
-        with left:
-            text = st.empty()
-            goal = st.empty()
-        with right:
-            history = st.empty()
-            graph = st.empty()
+        with explorer:
+            left, right = st.columns([0.5, 0.5], gap="large")
+            with left:
+                text = st.empty()
+                goal = st.empty()
+            with right:
+                history = st.empty()
+                graph = st.empty()
 
-    with about:
-        _left, _center, _right = st.columns([0.225, 0.55, 0.225])
-        with _center:
-            build_about()
+        with about:
+            _left, _center, _right = st.columns([0.225, 0.55, 0.225])
+            with _center:
+                build_about()
 
-    # Build history selectbox
+        # Build history selectbox
 
-    with history:
-        st.selectbox(
-            label="history",
-            options=st.session_state["history"][::-1],
-            index=None,
-            on_change=define_text_input_from_history_selectbox,
-            key="history_input",
-            placeholder="↺ History",
-            disabled=True if len(st.session_state["history"]) < 2 else False,
-            label_visibility="collapsed"
-        )
-
-    # Build text
-
-    if st.session_state["text_input"]:
-        with text:
-            text_output = click_detector(
-                html_content=build_text(data=data, doc_id=st.session_state["text_input"],
-                                        clicked_sent_id=st.session_state["clicked_sent_id"]),
-                key="clicked_sent_id"
+        with history:
+            st.selectbox(
+                label="history",
+                options=st.session_state["history"][::-1],
+                index=None,
+                on_change=define_text_input_from_history_selectbox,
+                key="history_input",
+                placeholder="↺ History",
+                disabled=True if len(st.session_state["history"]) < 2 else False,
+                label_visibility="collapsed"
             )
 
-        # Build graph
+        # Build text
 
-        if text_output:
-            with graph:
-                g = Graph(data=data)
-                graph_output = g.build(doc_id_sent_id=text_output)
+        if st.session_state["text_input"]:
+            with text:
+                text_output = click_detector(
+                    html_content=build_text(data=data, doc_id=st.session_state["text_input"],
+                                            clicked_sent_id=st.session_state["clicked_sent_id"]),
+                    key="clicked_sent_id"
+                )
 
-            # Build goal text
+            # Build graph
 
-            if graph_output and "|" in graph_output:
-                with goal:
-                    link_doc_id, link_sent_id, color, node_label = graph_output.split("|")
-                    goal_output = click_detector(
-                        html_content=build_goal_text(data=data, doc_id=link_doc_id,
-                                                     link_sent_id=int(link_sent_id), color=color, node_label=node_label),
-                        key="clicked_goal"
-                    )
+            if text_output:
+                with graph:
+                    g = Graph(data=data)
+                    graph_output = g.build(doc_id_sent_id=text_output)
 
-                    # Build text from goal
+                # Build goal text
 
-                    if goal_output:
-                        st.session_state["text_input"] = goal_output
-                        add_to_history(title=data[data["doc_id"] == goal_output]["title"].iloc[0])
-                        del st.session_state["clicked_goal"]
-                        st.session_state["end_of_script"] = "end"
-                        st.rerun()
+                if graph_output and "|" in graph_output:
+                    with goal:
+                        link_doc_id, link_sent_id, color, node_label = graph_output.split("|")
+                        goal_output = click_detector(
+                            html_content=build_goal_text(data=data, doc_id=link_doc_id,
+                                                         link_sent_id=int(link_sent_id), color=color, node_label=node_label),
+                            key="clicked_goal"
+                        )
+
+                        # Build text from goal
+
+                        if goal_output:
+                            st.session_state["text_input"] = goal_output
+                            add_to_history(title=data[data["doc_id"] == goal_output]["title"].iloc[0])
+                            del st.session_state["clicked_goal"]
+                            st.session_state["end_of_script"] = "end"
+                            st.rerun()
