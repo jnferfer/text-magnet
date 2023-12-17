@@ -53,7 +53,7 @@ As we will see, TextMagnet first utilizes a contextualization module to avoid am
 &nbsp;  
 &nbsp;  
 &nbsp;  
-| Text (unambiguous) | Cosine dist. | Logical relation |
+| Text (unambiguous) | L2-Squared | Logical relation |
 |-----------|-----------|-----------|
 | Schizophrenia is one type of psychotic disorder | 0.58 | :x: |
 | Panic disorder is more common in women than men | 0.36 | :white_check_mark: |
@@ -113,7 +113,7 @@ The 1.0 version displays intuitive graphs showing the current performance of the
 graphs_2 = """
 On the other hand, each of these relationships can play a role depending on the use case. In a medical context, for example, you can check with *Intervention* how different ideas are connected to a query (and extract different forms of treatment for a medical condition). Or in fact-checking, it is useful to see how one idea can be the opposite of another, or diverge substantially to identify cases of misinformation.
 
-When browsing through the graph, hovering the mouse over each node displays a distance metric between the vectors of the original and compared sentences. The engine tends to be more reliable the smaller the distance between them (cosine distance).
+When browsing through the graph, hovering the mouse over each node displays a distance metric between the vectors of the original and compared sentences. The engine tends to be more reliable the smaller the distance between them (L2-Squared).
 """
 
 future_work_subheading = "Future work"

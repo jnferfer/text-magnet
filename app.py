@@ -301,7 +301,9 @@ if __name__ == "__main__":
         
         :two: Click on the underlined sentences to discover related ideas in different texts
         
-        :three: Click on the graph's nodes to reach the text snippet that contains the related idea
+        :three: Click on the nodes of the graph to navigate to the original text of the related idea
+        
+        :four: Hover over a node to see a score between 0 and 1 (i.e. [L2-Squared](https://weaviate.io/blog/distance-metrics-in-vector-search#distance-metrics)). The closer it gets to 0, the more reliable the relationship between the two ideas shown by the graph
         
         Demo version with [MedQuAD](https://paperswithcode.com/dataset/medquad)
         """)
