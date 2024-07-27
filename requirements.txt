@@ -2,4 +2,4 @@ streamlit
 pandas
 st_click_detector
 st-gsheets-connection
-numpy==1.26.4
+numpy
