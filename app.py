@@ -4,10 +4,9 @@ the application at 'https://textmagnet.streamlit.app/' (About section)
 
 The NLP engine is proprietary, this app merely visualizes the results of the NLP module using data from the
  MedQuAD dataset (https://paperswithcode.com/dataset/medquad).
-
-Author: Juan Fernández
 """
 
+from streamlit_extras.app_logo import add_logo
 from about import *
 from ast import literal_eval
 from styles import *
@@ -305,7 +304,6 @@ if __name__ == "__main__":
     with st.sidebar:
         st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
         st.image("imgs/logo.png", width=69)
-        logo_path = "imgs/logo.png"
         st.markdown(
             SIDEBAR_TEXT.format(
                 "TextMagnet 1.0",
