@@ -301,29 +301,9 @@ if __name__ == "__main__":
     # Build sidebar
 
     with st.sidebar:
-        #st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
-        st.markdown(
-            """
-            <style>
-                [data-testid=stSidebar] [data-testid=stImage]{
-                    text-align: center;
-                    display: block;
-                    margin-left: auto;
-                    margin-right: auto;
-                    width: 100%;
-                }
-            </style>
-            """, unsafe_allow_html=True
-        )
-        st.image("imgs/logo.png", width=69)
-        st.markdown(
-            SIDEBAR_TEXT.format(
-                "TextMagnet 1.0",
-                "Discover hidden connections",
-                "Select a title from the list and click on the underlined sentences to discover related ideas in other different texts"),
-            unsafe_allow_html=True
-        )
 
+        st.markdown("# :magnet: TextMagnet 1.0")
+        st.markdown("*Discover hidden connections in medical texts*")
         st.selectbox(
             label="title",
             options=titles,
@@ -335,9 +315,8 @@ if __name__ == "__main__":
         )
 
         st.markdown("""
-        &nbsp;  
-        &nbsp;  
-        &nbsp;  
+        &nbsp;
+        
         Instructions:
         
         :one: Select a title from the list
