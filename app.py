@@ -304,7 +304,7 @@ if __name__ == "__main__":
 
     with st.sidebar:
         st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
-        st.image("imgs/logo.png", width=250)
+        st.image("imgs/logo.png", width=69)
         st.markdown(
             SIDEBAR_TEXT.format(
                 "TextMagnet 1.0",
