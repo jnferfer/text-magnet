@@ -301,7 +301,20 @@ if __name__ == "__main__":
     # Build sidebar
 
     with st.sidebar:
-        st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
+        #st.markdown(SIDEBAR_LOGO, unsafe_allow_html=True)
+        st.markdown(
+            """
+            <style>
+                [data-testid=stSidebar] [data-testid=stImage]{
+                    text-align: center;
+                    display: block;
+                    margin-left: auto;
+                    margin-right: auto;
+                    width: 100%;
+                }
+            </style>
+            """, unsafe_allow_html=True
+        )
         st.image("imgs/logo.png", width=69)
         st.markdown(
             SIDEBAR_TEXT.format(
