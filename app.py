@@ -6,7 +6,6 @@ The NLP engine is proprietary, this app merely visualizes the results of the NLP
  MedQuAD dataset (https://paperswithcode.com/dataset/medquad).
 """
 
-from streamlit_extras.app_logo import add_logo
 from about import *
 from ast import literal_eval
 from styles import *
